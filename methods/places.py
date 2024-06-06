@@ -21,6 +21,18 @@ class Places:
         self.__updated_at = self.__created_at
         self.__id = str(uuid.uuid4())
         self.__host_id = None
+        self.__host_name = None
+
+    @property
+    def host_name(self):
+        """Getter for host_name"""
+        return self.__host_name
+
+    @host_name.setter
+    def host_name(self, host_name):
+        """Setter for host_name"""
+        self.__host_name = host_name
+        self.__updated_at = datetime.datetime.now()
 
     @property
     def host_id(self):
