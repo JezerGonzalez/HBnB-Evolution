@@ -1,6 +1,7 @@
 #!/usr/python3
 """User class for the HBnB Evolution project"""
 import uuid, datetime
+from .places import Places
 
 
 class User:
@@ -14,6 +15,15 @@ class User:
         self.__created = datetime.datetime.now().strftime("%b/%d/%y %I:%M %p")
         self.__updated = self. created
         self.__id = str(uuid.uuid4())
+        self.__places = []
+
+    def add_place(self, place):
+        """Adds a place to the list of places"""
+        if not isinstance(place, Places):
+            raise TypeError("place must be an instance of Place")
+        self.__places.append(place)
+        place.host_id = self.__id
+        place.updated = datetime.datetime.now().strftime("%b/%d/%y %I:%M %p")
 
     @property
     def id(self):
@@ -38,6 +48,10 @@ class User:
     @first_name.setter
     def first_name(self, first_name):
         """Sets first name"""
+        if type(first_name) is not str:
+            raise TypeError("Name must be a string")
+        if len(first_name) == 0:
+            raise ValueError("Name must not be empty")
         self.__first_name = first_name
         self.updated = datetime.datetime.now().strftime("%b/%d/%y %I:%M %p")
     @property
@@ -48,6 +62,10 @@ class User:
     @last_name.setter
     def last_name(self, last_name):
         """Last name setter"""
+        if type(last_name) is not str:
+            raise TypeError("Last name must be a string")
+        if len(last_name) == 0:
+            raise ValueError("Last name must not be empty")
         self.__last_name = last_name
         self.updated = datetime.datetime.now().strftime("%b/%d/%y %I:%M %p")
     @property
@@ -58,8 +76,13 @@ class User:
     @email.setter
     def email(self, email):
         """Email setter"""
+        if type(email) is not str:
+            raise TypeError("Email must be a string")
+        if len(email) == 0:
+            raise ValueError("Email must not be empty")
         self.__email = email
         self.updated = datetime.datetime.now().strftime("%b/%d/%y %I:%M %p")
+
     @property
     def password(self):
         """Password getter"""
@@ -68,6 +91,10 @@ class User:
     @password.setter
     def password(self, password):
         """Password setter"""
+        if type(password) is not str:
+            raise TypeError("Password must be a string")
+        if len(password) == 0:
+            raise ValueError("Password must not be empty")
         self.__password = password
         self.updated = datetime.datetime.now().strftime("%b/%d/%y %I:%M %p")
 
@@ -76,4 +103,4 @@ class User:
 jezer = User(first_name='jezer', last_name='gonzalez', email='jezergonzalez@gmail.com', password='1234')
 
 print(f"User: {jezer.first_name} {jezer.last_name}, Email: {jezer.email}, Password: {jezer.password}")
-print(f"id: {jezer.id}")
+print(f"id: {jezer.id}, Created: {jezer.created}, Last-Modified: {jezer.updated}")
